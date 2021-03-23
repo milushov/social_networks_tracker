@@ -15,6 +15,8 @@ class ParallelFetcher < RootService
     https://takehome.io/instagram
   ].freeze
 
+  # I understand that input validation for such simple task is not required,
+  # but I decided to show how I usually write complex services on daily basis
   class Contract < RootContract
     params do
       required(:urls).filled { each { filled? } }
@@ -30,8 +32,6 @@ class ParallelFetcher < RootService
   map :fetch_responses
   map :proccess_responses
 
-  # I understand that input validation for such simple task is not required,
-  # but I decided to show how I usually write complex services on daily basis
   def validate_input(input)
     Contract.validate_input(input)
   end
@@ -43,7 +43,7 @@ class ParallelFetcher < RootService
         make_request(url)
       rescue => e
         log_error(e.message)
-        {error: error_message(:url_not_accessible, url: url)}
+        [{error: error_message(:url_not_accessible, url: url)}]
       end
     end
     input.merge(responses: responses)
@@ -67,7 +67,7 @@ class ParallelFetcher < RootService
     JSON.parse(string, symbolize_names: true)
   rescue => e
     log_error(e.message)
-    {error: error_message(:json_parse_failure, json: string)}
+    [{error: error_message(:json_parse_failure, json: string)}]
   end
 
   def error_message(key, **attrs)

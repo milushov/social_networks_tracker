@@ -1,0 +1,5 @@
+parallel: true
+
+ignore:
+  - "app/**/*":
+    - Security/Open

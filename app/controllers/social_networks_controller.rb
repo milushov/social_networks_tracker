@@ -8,6 +8,8 @@ class SocialNetworksController < ApplicationController
 
   private
 
+  # It's not required, but I decided to make this app more general,
+  # so it could handle any passed links
   def urls_params
     params.permit(urls: []).dig(:urls) || ParallelFetcher::DEFAULT_URLS
   end

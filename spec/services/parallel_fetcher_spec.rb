@@ -25,6 +25,7 @@ describe ParallelFetcher do
     let(:string_response) { "I am trapped in a social media.." }
     let(:url) { "http://example.com/a" }
     let(:params) { {urls: [url]} }
+    let(:first_error) { ->(key) { subject.value!.dig(:results, key, 0, :error) } }
 
     context "when url returns valid response" do
       before do
@@ -46,7 +47,7 @@ describe ParallelFetcher do
 
       it "returns proper response" do
         expect(subject).to be_success
-        expect(subject.value![:results]["a"][:error]).to match(/JSON string is not valid/)
+        expect(first_error["a"]).to match(/JSON string is not valid/)
       end
     end
 
@@ -57,7 +58,7 @@ describe ParallelFetcher do
 
       it "returns proper response" do
         expect(subject).to be_success
-        expect(subject.value![:results]["a"][:error]).to match(/is not accessible for now/)
+        expect(first_error["a"]).to match(/is not accessible for now/)
       end
     end
 
@@ -68,7 +69,7 @@ describe ParallelFetcher do
 
       it "returns proper response" do
         expect(subject).to be_success
-        expect(subject.value![:results]["a"][:error]).to match(/is not accessible for now/)
+        expect(first_error["a"]).to match(/is not accessible for now/)
       end
     end
 
@@ -86,9 +87,9 @@ describe ParallelFetcher do
 
       it "returns proper response" do
         expect(subject).to be_success
-        expect(subject.value![:results]["a"][:error]).to match(/is not accessible for now/)
-        expect(subject.value![:results]["b"][:error]).to match(/JSON string is not valid/)
-        expect(subject.value![:results]["c"][:error]).to match(/is not accessible for now/)
+        expect(first_error["a"]).to match(/is not accessible for now/)
+        expect(first_error["b"]).to match(/JSON string is not valid/)
+        expect(first_error["c"]).to match(/is not accessible for now/)
       end
     end
   end

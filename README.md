@@ -9,7 +9,7 @@ But as I have to show some of my skills in limited period of time - I'll do it i
 - [parallel gem](https://github.com/grosser/parallel ) for reliable parallel execution
 - rspec and webmock for tests
 - dry libraries for services
-- standardrb for code validation
+- standardrb for style guide validation
 
 ## How to run
 ```
@@ -40,9 +40,9 @@ curl http://localhost:3000 | jsonpp
       "status": "I am in a hospital. I will not tell you anything about why I am here."
     }
   ],
-  "instagram": {
+  "instagram": [{
     "error": "Requested url: https://takehome.io/instagram is not accessible for now, please, try again later"
-  },
+  }],
   "twitter": [
     {
       "username": "@GuyEndoreKaiser",
